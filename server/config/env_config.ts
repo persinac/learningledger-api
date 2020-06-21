@@ -13,7 +13,7 @@ export type MySQLConfig = {
 };
 
 export let env_config: MySQLConfig = {
-    host: config.get("host"),
+    host: process.env.NODE_ENV === "production" ? process.env.DOCKER_HOST_IP : config.get("host"),
     user: config.get("user"),
     password: config.get("password"),
     database: config.get("database")
