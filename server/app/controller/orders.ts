@@ -5,6 +5,7 @@ import OrderNotFoundException from "../exceptions/OrderNotFoundException";
 import CannotCreateOrderException from "../exceptions/CannotCreateOrderException";
 import HttpException from "../exceptions/HttpException";
 import CannotUpdateOrderException from "../exceptions/CannotUpdateOrderException";
+import orderValidation from "../middleware/orderValidation";
 
 class OrderController {
     public path = "/order";
@@ -18,12 +19,12 @@ class OrderController {
     public initializeRoutes() {
         this.router.get(this.path, this.getAllOrders);
         this.router.get(`${this.path}/:id`, this.getOrderById);
-        this.router.post(this.path, this.createOrder);
-        this.router.put(`${this.path}/:id`, this.updateOrder);
+        this.router.post(this.path, orderValidation(Order), this.createOrder);
+        this.router.put(`${this.path}/:id`, orderValidation(Order, true), this.updateOrder);
     }
 
     private getAllOrders = (request: Request, response: Response) => {
-        this.orderRepository.find()
+        this.orderRepository.find({ relations: ["orderDetails"] })
             .then((orders: Order[]) => {
                 response.send(orders);
             });

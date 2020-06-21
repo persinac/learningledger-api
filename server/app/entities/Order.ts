@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { IsNumber, ValidateIf } from "class-validator";
+import { OrderDetail } from "./OrderDetail";
 
 @Entity("order")
 export class Order {
@@ -6,58 +8,17 @@ export class Order {
     public orderID?: number;
 
     @Column()
+    @IsNumber()
     public stockID: number;
 
     @Column()
+    @IsNumber()
     public commodityType: number;
 
     @Column()
+    @IsNumber()
     public contractType: number;
 
-    @Column({
-        type: "decimal",
-        precision: 6,
-        scale: 2,
-        default: null
-    })
-    public entryPrice: number;
-
-    @Column({ default: null, nullable: true })
-    public entryDatetime: Date;
-
-    @Column({ default: null, nullable: true })
-    public quantityBought: number;
-
-    @Column({
-        type: "decimal",
-        precision: 6,
-        scale: 2,
-        default: null
-    })
-    public totalEntryPrice: number;
-
-    @Column()
-    public orderStatusID: number;
-
-    @Column({ default: null, nullable: true })
-    public exitDatetime: Date;
-
-    @Column({
-        type: "decimal",
-        precision: 6,
-        scale: 2,
-        default: null
-    })
-    public exitPrice: number;
-
-    @Column({ default: null, nullable: true })
-    public quantitySold: number;
-
-    @Column({
-        type: "decimal",
-        precision: 6,
-        scale: 2,
-        default: null
-    })
-    public totalExitPrice: number;
+    @OneToMany(() => OrderDetail, (od: OrderDetail) => od.orderHeader)
+    public orderDetails: OrderDetail[];
 }
