@@ -15,7 +15,5 @@ RUN npm run build-ts
 # Specify port app runs on
 EXPOSE 48614
 
-RUN echo route -n | awk '/UG[ \t]/{print $2}'
-
 # Run the app
 CMD npm start

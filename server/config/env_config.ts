@@ -2,6 +2,9 @@
  * env_config.
  *
  * Revisions to this file should not be committed to the repository.
+ *
+ * NOTE:
+ * This will likely be deprecated with docker-compose setup
  */
 const config = require("config");
 
