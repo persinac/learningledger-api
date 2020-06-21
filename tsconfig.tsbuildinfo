@@ -1741,13 +1741,8 @@
         "signature": "26d590f7fc94dc8bd476aab67a6047b39a72b0dcbdb7c5ce1dbd369762d63e4f",
         "affectsGlobalScope": false
       },
-      "./server/config/env_config.ts": {
-        "version": "66ff0cc3c11988bd0df41aaf607d80adeaa2efbd06c6516bfc58ed97616d462b",
-        "signature": "8149f767e6600386243046769b8af6d64f34d371dd5cbee9771e303d6e48afa7",
-        "affectsGlobalScope": false
-      },
       "./server/ormconfig.ts": {
-        "version": "8b5aad7aa0eef8ad7a57dc31d6a0f710144b705582f967c9a1241f29dfa83d67",
+        "version": "60a42bbe1957509acc19054df1e7ec930219b412bc02b7437d54ba4e62ff48b2",
         "signature": "1ef51c28969189a7f3d57458d05a70013325e014d4bec0f0322aeb59f1751096",
         "affectsGlobalScope": false
       },
@@ -1756,9 +1751,29 @@
         "signature": "79b469cb32c8c41f725fa2220b275367dc3f48cf8c0650f26e127264ef8a6f7b",
         "affectsGlobalScope": false
       },
+      "./server/app/exceptions/httpexception.ts": {
+        "version": "2e96055c6aba54137639b42934efdb78d8cfc13fadd80d135c847cea12e681c5",
+        "signature": "994374b2a57ed65ee05b1d9526b974aa69a1e5bf2f0489e46d70cbd7d604128c",
+        "affectsGlobalScope": false
+      },
+      "./server/app/exceptions/ordernotfoundexception.ts": {
+        "version": "a35347df6b853e913b0e48f4274352446f89aa762f8e9de1ce69793963b1e816",
+        "signature": "1f34d7802fcfa7378cb319d3d4e9e752aa578920221674439823db54e14a9934",
+        "affectsGlobalScope": false
+      },
+      "./server/app/exceptions/cannotcreateorderexception.ts": {
+        "version": "713d38096c73165e06095e721e7d9ae28138a44bb7cbd579ca0845e1dfb044e6",
+        "signature": "11f0d1ac489a1f39d7f7c154d60f7f7768331faf2353f1edf9032a76109c8baf",
+        "affectsGlobalScope": false
+      },
+      "./server/app/exceptions/cannotupdateorderexception.ts": {
+        "version": "3f6bee7a0064c02b7e771bcda36190db0a1cc0b0bbb0a842a33ff7e7a94900d1",
+        "signature": "224d6a3bfea2de80eb4795dcbf9c624386a1eb2350723d6c17761633b1354021",
+        "affectsGlobalScope": false
+      },
       "./server/app/controller/orders.ts": {
-        "version": "0613caf3c4b79e2b77221c2819316dcf144479f95be78507e5f0092a29501ff1",
-        "signature": "704d1ebe070acb3ce3363ba2c8c1b706a21ad0e6d40e674e8a18cdba77e1314a",
+        "version": "8f7506a385f80b38c503f112299bbf74c19d78cf2b4466521321b50b5cd76f3f",
+        "signature": "5f9ea7b4eeb71484d2ce4287e2f7f78c82dc723f0fb7a686a83b2b64693c114d",
         "affectsGlobalScope": false
       },
       "./server/server.ts": {
@@ -1769,6 +1784,11 @@
       "./server/app/structure/order.ts": {
         "version": "1397050118f39e682dffac7b105d87802e49610657393dbc2e34e8a1fa57a012",
         "signature": "55b2c04f7c38d351ba1aaf15f8158199a150901e12522ee362f3eb71dcfc786a",
+        "affectsGlobalScope": false
+      },
+      "./server/config/env_config.ts": {
+        "version": "948bde86cf7cf5fe0989667d18b26550946ad769c4c34f00c08778ada5da186d",
+        "signature": "8149f767e6600386243046769b8af6d64f34d371dd5cbee9771e303d6e48afa7",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/caseless/index.d.ts": {
@@ -4829,7 +4849,11 @@
         "./node_modules/@types/node/ts3.2/util.d.ts",
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/typeorm/index.d.ts",
-        "./server/app/entities/order.ts"
+        "./server/app/entities/order.ts",
+        "./server/app/exceptions/cannotcreateorderexception.ts",
+        "./server/app/exceptions/cannotupdateorderexception.ts",
+        "./server/app/exceptions/httpexception.ts",
+        "./server/app/exceptions/ordernotfoundexception.ts"
       ],
       "./server/app/entities/order.ts": [
         "./node_modules/@types/node/fs.d.ts",
@@ -4837,6 +4861,33 @@
         "./node_modules/@types/node/ts3.2/util.d.ts",
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/typeorm/index.d.ts"
+      ],
+      "./server/app/exceptions/cannotcreateorderexception.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./server/app/exceptions/httpexception.ts"
+      ],
+      "./server/app/exceptions/cannotupdateorderexception.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./server/app/exceptions/httpexception.ts"
+      ],
+      "./server/app/exceptions/httpexception.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts"
+      ],
+      "./server/app/exceptions/ordernotfoundexception.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./server/app/exceptions/httpexception.ts"
       ],
       "./server/app/structure/order.ts": [
         "./node_modules/@types/node/fs.d.ts",
@@ -4855,8 +4906,7 @@
         "./node_modules/@types/node/ts3.2/fs.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts",
         "./node_modules/@types/node/util.d.ts",
-        "./node_modules/typeorm/index.d.ts",
-        "./server/config/env_config.ts"
+        "./node_modules/typeorm/index.d.ts"
       ],
       "./server/server.ts": [
         "./node_modules/@types/node/fs.d.ts",
@@ -7851,8 +7901,16 @@
         "./node_modules/@types/express/index.d.ts"
       ],
       "./server/app/controller/orders.ts": [
-        "./node_modules/@types/express-serve-static-core/index.d.ts",
-        "./node_modules/@types/express/index.d.ts"
+        "./node_modules/@types/express-serve-static-core/index.d.ts"
+      ],
+      "./server/app/exceptions/cannotcreateorderexception.ts": [
+        "./server/app/exceptions/httpexception.ts"
+      ],
+      "./server/app/exceptions/cannotupdateorderexception.ts": [
+        "./server/app/exceptions/httpexception.ts"
+      ],
+      "./server/app/exceptions/ordernotfoundexception.ts": [
+        "./server/app/exceptions/httpexception.ts"
       ],
       "./server/ormconfig.ts": [
         "./node_modules/typeorm/index.d.ts"
@@ -8220,6 +8278,10 @@
       "./server/app.ts",
       "./server/app/controller/orders.ts",
       "./server/app/entities/order.ts",
+      "./server/app/exceptions/cannotcreateorderexception.ts",
+      "./server/app/exceptions/cannotupdateorderexception.ts",
+      "./server/app/exceptions/httpexception.ts",
+      "./server/app/exceptions/ordernotfoundexception.ts",
       "./server/app/structure/order.ts",
       "./server/config/env_config.ts",
       "./server/ormconfig.ts",

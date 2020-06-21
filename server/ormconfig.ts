@@ -1,5 +1,4 @@
 import { ConnectionOptions } from "typeorm";
-import { env_config } from "./config/env_config";
 
 // set via docker-compose
 const {
@@ -12,11 +11,11 @@ const {
 
 const ormDBConfig: ConnectionOptions = {
     type: "mysql",
-    host: DB_HOST || env_config.host,
+    host: DB_HOST,
     port: Number(DB_PORT) || 3306,
-    username: DB_USER || env_config.user,
-    password: DB_PASSWORD || env_config.password,
-    database: DB_NAME || env_config.database,
+    username: DB_USER,
+    password: DB_PASSWORD,
+    database: DB_NAME,
     entities: [
         __dirname + "/app/entities/*{.ts,.js}",
     ],

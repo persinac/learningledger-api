@@ -1,6 +1,10 @@
-import { Request, Response, Router } from "express";
+import { Request, Response, Router, NextFunction } from "express";
 import { Order } from "../entities/Order";
 import { getRepository } from "typeorm";
+import OrderNotFoundException from "../exceptions/OrderNotFoundException";
+import CannotCreateOrderException from "../exceptions/CannotCreateOrderException";
+import HttpException from "../exceptions/HttpException";
+import CannotUpdateOrderException from "../exceptions/CannotUpdateOrderException";
 
 class OrderController {
     public path = "/order";
@@ -13,18 +17,61 @@ class OrderController {
 
     public initializeRoutes() {
         this.router.get(this.path, this.getAllOrders);
-        this.router.post(this.path, this.createAnOrder);
+        this.router.get(`${this.path}/:id`, this.getOrderById);
+        this.router.post(this.path, this.createOrder);
+        this.router.put(`${this.path}/:id`, this.updateOrder);
     }
 
-    private getAllOrders = async (request: Request, response: Response) => {
-        const orders = await this.orderRepository.find();
-        response.send(orders);
+    private getAllOrders = (request: Request, response: Response) => {
+        this.orderRepository.find()
+            .then((orders: Order[]) => {
+                response.send(orders);
+            });
     };
 
-    createAnOrder = (request: Request, response: Response) => {
-        // const order: Order = request.body;
-        // this.orders.push(order);
-        // response.send(order);
+    private getOrderById = (request: Request, response: Response, next: NextFunction) => {
+        const id = request.params.id;
+        this.orderRepository.findOne(id)
+            .then((result: Order) => {
+                console.log(result);
+                result ? response.send(result) : next(new OrderNotFoundException(id));
+            })
+            .catch((err) => {
+                next(new HttpException(404, err));
+            });
+    };
+
+    private createOrder = (request: Request, response: Response, next: NextFunction) => {
+        const orderData: Order = request.body;
+        const newPost = this.orderRepository.create(orderData);
+
+        this.orderRepository.save(newPost)
+            .then((result: Order) => {
+                response.send(result);
+            })
+            .catch((err) => {
+                next(new CannotCreateOrderException(err));
+            });
+    };
+
+    /* this will be re-worked when DB update happens */
+    private updateOrder = (request: Request, response: Response, next: NextFunction) => {
+        const id = request.params.id;
+        const orderData: Order = request.body;
+        this.orderRepository.update(id, orderData)
+            .then(() => {
+                this.orderRepository.findOne(id)
+                    .then((result: Order) => {
+                        console.log(result);
+                        result ? response.send(result) : next(new OrderNotFoundException(id));
+                    })
+                    .catch((err) => {
+                        next(new HttpException(404, err));
+                    });
+            })
+            .catch((err) => {
+                next(new CannotUpdateOrderException(err));
+            });
     }
 }
 

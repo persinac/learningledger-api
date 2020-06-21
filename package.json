@@ -8,7 +8,7 @@
   "scripts": {
     "build-ts": "tsc",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-    "start-local": "set NODE_ENV=dev&& set DOCKER_HOST_IP=127.0.0.1&& node .",
+    "start-local": "set NODE_ENV=dev&& set DB_USER=demo&& set DB_PASSWORD=demo123!&& set DB_HOST=127.0.0.1&& set DB_NAME=stocks&& node .",
     "start-dev": "node .",
     "start-prod": "node .",
     "start": "npm run start-dev",
