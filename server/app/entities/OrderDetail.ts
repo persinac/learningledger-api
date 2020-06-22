@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { IsNumber, ValidateIf } from "class-validator";
 import { Order } from "./Order";
 
@@ -11,6 +11,7 @@ export class OrderDetail {
     @IsNumber()
     public orderID: number;
 
+
     @Column()
     @IsNumber()
     public orderTypeID: number;
@@ -19,14 +20,17 @@ export class OrderDetail {
         type: "decimal",
         precision: 6,
         scale: 2,
+        // tslint:disable-next-line:no-null-keyword
         default: null
     })
     @IsNumber()
     public price: number;
 
+    // tslint:disable-next-line:no-null-keyword
     @Column({ default: null, nullable: true })
     public orderDatetime: Date;
 
+    // tslint:disable-next-line:no-null-keyword
     @Column({ default: null, nullable: true })
     @IsNumber()
     public quantityBought: number;
@@ -35,6 +39,7 @@ export class OrderDetail {
         type: "decimal",
         precision: 6,
         scale: 2,
+        // tslint:disable-next-line:no-null-keyword
         default: null
     })
     @IsNumber()
@@ -44,6 +49,10 @@ export class OrderDetail {
     @IsNumber()
     public orderStatusID: number;
 
-    @ManyToOne(() => Order, (o: Order) => o.orderDetails)
-    public orderHeader: Order;
+    @ManyToOne(() => Order)
+    @JoinColumn({
+        name: "orderID",
+        referencedColumnName: "orderID"
+    })
+    public order?: Order;
 }

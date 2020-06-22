@@ -1,10 +1,11 @@
+import OrderDetail from "./OrderDetails";
+
 interface Order {
-    stockId: number;
-    contract: number;
+    orderID: number;
+    stockID: number;
+    commodityType: number;
     contractType: number;
-    entryPrice: number;
-    quantityBought: number;
-    totalEntryPrice: number;
+    orderDetails: OrderDetail;
 }
 
 export default Order;

@@ -19,6 +19,6 @@ export class Order {
     @IsNumber()
     public contractType: number;
 
-    @OneToMany(() => OrderDetail, (od: OrderDetail) => od.orderHeader)
+    @OneToMany(() => OrderDetail, (od: OrderDetail) => od.order)
     public orderDetails: OrderDetail[];
 }

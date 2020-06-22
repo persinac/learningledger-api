@@ -20,8 +20,9 @@ https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-h
 https://typeorm.io/#/
 
 ## TODO
- - Docker Compose file
- - Other DB and API related stuff
+ - Order Details implementation (pretty much everything)
+ - Order nodes implementation
+ - IEX and corresponding tables built out
  
 ### PM2 ?
  - PM2 for process management on production (TBD)

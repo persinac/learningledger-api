@@ -6,6 +6,10 @@ import CannotCreateOrderException from "../exceptions/CannotCreateOrderException
 import HttpException from "../exceptions/HttpException";
 import CannotUpdateOrderException from "../exceptions/CannotUpdateOrderException";
 import orderValidation from "../middleware/orderValidation";
+import { OrderDetail } from "../entities/OrderDetail";
+import OrderDetailController from "./orderDetails";
+import nonRequestOrderDetailValidation from "../middleware/nonRequestOrderDetailValidation";
+import { ValidationError } from "class-validator";
 
 class OrderController {
     public path = "/order";
@@ -44,18 +48,67 @@ class OrderController {
 
     private createOrder = (request: Request, response: Response, next: NextFunction) => {
         const orderData: Order = request.body;
-        const newPost = this.orderRepository.create(orderData);
+        const orderDetailData: OrderDetail = request.body.orderDetail;
+        const newOrder = this.orderRepository.create(orderData);
 
-        this.orderRepository.save(newPost)
+        this.orderRepository.save(newOrder)
             .then((result: Order) => {
-                response.send(result);
+                if (orderDetailData) {
+                    orderDetailData.orderID = result.orderID;
+                    orderDetailData.totalPrice = 0.00;
+                    nonRequestOrderDetailValidation(OrderDetail, orderDetailData)
+                        .then((vErrors) => {
+                            if (vErrors.length > 0) {
+                                // created an order but details has issues
+                                response.send({
+                                    order: result,
+                                    orderDetails: [],
+                                    error: vErrors.map((error: ValidationError) => Object.values(error.constraints)).join(", ")
+                                });
+                            } else {
+                                const od: OrderDetailController = new OrderDetailController();
+                                od.createOrderDetailWithNewOrder({
+                                    orderID: result.orderID,
+                                    orderTypeID: orderDetailData.orderTypeID,
+                                    price: orderDetailData.price,
+                                    orderDatetime: orderDetailData.orderDatetime || new Date(),
+                                    quantityBought: orderDetailData.quantityBought,
+                                    totalPrice: orderDetailData.quantityBought * orderDetailData.price,
+                                    orderStatusID: orderDetailData.orderStatusID
+                                })
+                                    .then((odResult: OrderDetail) => {
+                                        // created an order with corresponding details
+                                        response.send({
+                                            order: result,
+                                            orderDetails: odResult,
+                                            error: ""
+                                        });
+                                    })
+                                    .catch((err) => {
+                                        // created an order but saving details has issues
+                                        response.send({
+                                            order: result,
+                                            orderDetails: [],
+                                            error: vErrors.map((error: ValidationError) => Object.values(error.constraints)).join(", ")
+                                        });
+                                    });
+                            }
+                        });
+                } else {
+                    // created an order without details
+                    response.send({
+                        order: result,
+                        orderDetails: [],
+                        error: ""
+                    });
+                }
             })
             .catch((err) => {
                 next(new CannotCreateOrderException(err));
             });
     };
 
-    /* this will be re-worked when DB update happens */
+    /* TODO: update an order will really only create a corresponding orderDetail row */
     private updateOrder = (request: Request, response: Response, next: NextFunction) => {
         const id = request.params.id;
         const orderData: Order = request.body;
