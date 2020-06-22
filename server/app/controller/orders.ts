@@ -54,6 +54,7 @@ class OrderController {
         this.orderRepository.save(newOrder)
             .then((result: Order) => {
                 if (orderDetailData) {
+                    /* TODO: This band of code is GROSS... see if we can't move to the order details controller */
                     orderDetailData.orderID = result.orderID;
                     orderDetailData.totalPrice = 0.00;
                     nonRequestOrderDetailValidation(OrderDetail, orderDetailData)
