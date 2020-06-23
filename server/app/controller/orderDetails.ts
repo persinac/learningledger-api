@@ -1,18 +1,18 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { Order } from "../entities/Order";
 import { getRepository } from "typeorm";
-import OrderNotFoundException from "../exceptions/OrderNotFoundException";
-import CannotCreateOrderException from "../exceptions/CannotCreateOrderException";
+import OrderNotFoundException from "../exceptions/order/OrderNotFoundException";
 import HttpException from "../exceptions/HttpException";
-import CannotUpdateOrderException from "../exceptions/CannotUpdateOrderException";
-import orderValidation from "../middleware/orderValidation";
 import { OrderDetail } from "../entities/OrderDetail";
+import nonRequestOrderDetailValidation from "../middleware/validations/nonRequestOrderDetailValidation";
+import { ValidationError } from "class-validator";
+import { OrderDetailUtility } from "../middleware/objectUtilities/orderDetailUtility";
+import CannotCreateOrderDetailException from "../exceptions/orderDetail/CannotCreateOrderDetailException";
+import CannotFindOrderDetailsWithOrderException
+    from "../exceptions/orderDetail/CannotFindOrderDetailsWithOrderException";
 
-/***
- * TODO: Actually work on this class... right now it's not really used
- * */
 class OrderDetailController {
-    public path = "/order/detail";
+    public path = "/order/:orderId/detail";
     public router = Router();
     private orderDetailRepository = getRepository(OrderDetail);
 
@@ -21,17 +21,10 @@ class OrderDetailController {
     }
 
     public initializeRoutes() {
-        this.router.get(this.path, this.getAllOrderDetails);
+        this.router.get(this.path, this.getOrderDetailsByOrderId);
         this.router.get(`${this.path}/:id`, this.getOrderDetailById);
-        this.router.post(this.path, orderValidation(Order), this.createOrderDetail);
+        this.router.post(this.path, this.createOrderDetail);
     }
-
-    private getAllOrderDetails = (request: Request, response: Response) => {
-        this.orderDetailRepository.find({ relations: ["order"] })
-            .then((orderDetails: OrderDetail[]) => {
-                response.send(orderDetails);
-            });
-    };
 
     private getOrderDetailById = (request: Request, response: Response, next: NextFunction) => {
         const id = request.params.id;
@@ -45,43 +38,87 @@ class OrderDetailController {
             });
     };
 
-    /* TODO: Implement */
     private getOrderDetailsByOrderId = (request: Request, response: Response, next: NextFunction) => {
-        // const id = request.params.id;
-        // this.orderDetailRepository.findOne(id)
-        //     .then((result: OrderDetail) => {
-        //         console.log(result);
-        //         result ? response.send(result) : next(new OrderNotFoundException(id));
-        //     })
-        //     .catch((err) => {
-        //         next(new HttpException(404, err));
-        //     });
-    };
-
-    private createOrderDetail = (request: Request, response: Response, next: NextFunction) => {
-        const orderData: Order = request.body;
-        const newOrderDetail = this.orderDetailRepository.create(orderData);
-
-        this.orderDetailRepository.save(newOrderDetail)
-            .then((result: OrderDetail) => {
-                response.send(result);
+        const orderId = request.params.orderId;
+        this.orderDetailRepository.createQueryBuilder("orderDetails")
+            .where({
+                orderID: orderId
+            })
+            .getMany()
+            .then((result: OrderDetail[]) => {
+                result.length > 0 ? response.send(result) : next(new CannotFindOrderDetailsWithOrderException(orderId));
             })
             .catch((err) => {
-                next(new CannotCreateOrderException(err));
+                next(new HttpException(404, err));
             });
     };
 
-    /* public methods? */
-    public createOrderDetailWithNewOrder = (orderDetail: OrderDetail): Promise<OrderDetail> => {
-        const newOrderDetail = this.orderDetailRepository.create(orderDetail);
+    private createOrderDetail = (request: Request, response: Response, next: NextFunction) => {
+        let orderDetail: OrderDetail = request.body;
+        orderDetail = OrderDetailUtility.setNewOrderDetailValues(undefined, orderDetail);
+        if (orderDetail.orderID === undefined) {
+            next(new CannotCreateOrderDetailException("Missing Order ID"));
+        } else {
+            nonRequestOrderDetailValidation(OrderDetail, orderDetail)
+                .then((vErrors) => {
+                    if (vErrors.length > 0) {
+                        response.send(
+                            next(
+                                new CannotCreateOrderDetailException(
+                                    vErrors.map((error: ValidationError) => Object.values(error.constraints)).join(", ")
+                                )
+                            )
+                        );
+                    } else {
+                        orderDetail.totalPrice = OrderDetailUtility.getOrderDetailTotalPrice(orderDetail);
+                        const newOrderDetail = this.orderDetailRepository.create(orderDetail);
+                        this.orderDetailRepository.save(newOrderDetail)
+                            .then((result: OrderDetail) => {
+                                response.send(result);
+                            })
+                            .catch((err) => {
+                                next(new CannotCreateOrderDetailException(err));
+                            });
+                    }
+                });
+        }
+    };
 
-        return this.orderDetailRepository.save(newOrderDetail);
-            // .then((result: OrderDetail) => {
-            //     response.send(result);
-            // })
-            // .catch((err) => {
-            //     next(new CannotCreateOrderException(err));
-            // });
+    /* public methods? */
+    /* Not sure this is how I want this to work, by passing in a response object, but we'll see */
+    public createOrderDetailWithNewOrder = (order: Order, orderDetail: OrderDetail, response: Response) => {
+        orderDetail = OrderDetailUtility.setNewOrderDetailValues(order, orderDetail);
+        nonRequestOrderDetailValidation(OrderDetail, orderDetail)
+            .then((vErrors) => {
+                if (vErrors.length > 0) {
+                    // created an order but details has issues
+                    response.send({
+                        order: order,
+                        orderDetails: [],
+                        error: vErrors.map((error: ValidationError) => Object.values(error.constraints)).join(", ")
+                    });
+                } else {
+                    orderDetail.totalPrice = OrderDetailUtility.getOrderDetailTotalPrice(orderDetail);
+                    const newOrderDetail = this.orderDetailRepository.create(orderDetail);
+                    this.orderDetailRepository.save(newOrderDetail)
+                        .then((odResult: OrderDetail) => {
+                            // created an order with corresponding details
+                            response.send({
+                                order: order,
+                                orderDetails: odResult,
+                                error: ""
+                            });
+                        })
+                        .catch((err) => {
+                            // created an order but saving details has issues
+                            response.send({
+                                order: order,
+                                orderDetails: [],
+                                error: err
+                            });
+                        });
+                }
+            });
     };
 }
 

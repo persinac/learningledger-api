@@ -2362,7 +2362,7 @@
         "affectsGlobalScope": false
       },
       "./server/app/entities/orderdetail.ts": {
-        "version": "7a861a7e6048f09a25b1534c7ed9f9b3df862531347c911a8ecd6a1d27022c01",
+        "version": "b703f8e785c558cd4f5f3c35970ce75cab29b5e4878ff54011670dde9cc1af01",
         "signature": "b2436ef9a106831983a19769a07e50911dcd1ba8f1bf4e3bc4853f497a3b9ce6",
         "affectsGlobalScope": false
       },
@@ -2376,19 +2376,19 @@
         "signature": "994374b2a57ed65ee05b1d9526b974aa69a1e5bf2f0489e46d70cbd7d604128c",
         "affectsGlobalScope": false
       },
-      "./server/app/exceptions/ordernotfoundexception.ts": {
-        "version": "a35347df6b853e913b0e48f4274352446f89aa762f8e9de1ce69793963b1e816",
-        "signature": "1f34d7802fcfa7378cb319d3d4e9e752aa578920221674439823db54e14a9934",
+      "./server/app/exceptions/order/ordernotfoundexception.ts": {
+        "version": "d652279a84801759627baf1359af6a76700d9943b6b1172874caa1d883210c52",
+        "signature": "26879af67d035b150b8ac1a82e33084e6125fbed97b636608beb4041bbc0f63e",
         "affectsGlobalScope": false
       },
-      "./server/app/exceptions/cannotcreateorderexception.ts": {
-        "version": "713d38096c73165e06095e721e7d9ae28138a44bb7cbd579ca0845e1dfb044e6",
-        "signature": "11f0d1ac489a1f39d7f7c154d60f7f7768331faf2353f1edf9032a76109c8baf",
+      "./server/app/exceptions/order/cannotcreateorderexception.ts": {
+        "version": "f0c214afbd85473b146b3798d84e2d37094cb13f88b0869a81d439526c22c484",
+        "signature": "c7f4e26bc337d536c9d513972821b07fade1f3b05fec9e46a79cb9c327324de0",
         "affectsGlobalScope": false
       },
-      "./server/app/exceptions/cannotupdateorderexception.ts": {
-        "version": "3f6bee7a0064c02b7e771bcda36190db0a1cc0b0bbb0a842a33ff7e7a94900d1",
-        "signature": "224d6a3bfea2de80eb4795dcbf9c624386a1eb2350723d6c17761633b1354021",
+      "./server/app/exceptions/order/cannotupdateorderexception.ts": {
+        "version": "151fa66bd7036657e53daccf678b62106a88af59c151b604db4463247139ebc0",
+        "signature": "947d8fdf46631e407269dbb0ee6fca4691736e8f6f69997a0a20d80472f271db",
         "affectsGlobalScope": false
       },
       "./node_modules/class-transformer/classtransformoptions.d.ts": {
@@ -2426,29 +2426,49 @@
         "signature": "097d4bf3331df1e138ffdcf92e1117f6841bc8337170d927fd955d5ee8a1674b",
         "affectsGlobalScope": false
       },
-      "./server/app/middleware/ordervalidation.ts": {
-        "version": "e92849d683e60828c1cc396e7282a5ba92b703d7f48bc9a261c6240d6d4d2959",
+      "./server/app/middleware/validations/ordervalidation.ts": {
+        "version": "2e7d97437ac4f92281cf85993aeceed3ea823d2cc570676f23bbe324e7ddc521",
         "signature": "e02262363410e633c66425e0e8a8f299d24ea90584e55f63186259fa092d2ba8",
         "affectsGlobalScope": false
       },
-      "./server/app/controller/orderdetails.ts": {
-        "version": "1c38620b9f89e433eaeb4f1f1b923e10ed1a2933817a697cc26764555c371586",
-        "signature": "42df221540c66a69132740f0a0378cd4bc2be96266e5887eccfdf13aa0a827fd",
-        "affectsGlobalScope": false
-      },
-      "./server/app/middleware/nonrequestorderdetailvalidation.ts": {
-        "version": "719185bc382ef223ec34586c075da30b8e979f769f3ee6e4b5ac251002e012bc",
+      "./server/app/middleware/validations/nonrequestorderdetailvalidation.ts": {
+        "version": "c00f5d75b866b2181488e42c34695c1aae07131c109414913beef98a7af92868",
         "signature": "f2664a7df67d97f0c3f7687e19855c9b88c8f87ff3a5eb686c7d539d07037fdf",
         "affectsGlobalScope": false
       },
+      "./server/app/middleware/objectutilities/orderdetailutility.ts": {
+        "version": "4a20a24c03f2e451ddc08c3d41093e9f440d626ee281ecb877a2f542ff7b6e49",
+        "signature": "07f8ba786f7481ce8048fb8ce47ddb0d48767efb8eb04c51c6544ba796a1b861",
+        "affectsGlobalScope": false
+      },
+      "./server/app/exceptions/orderdetail/cannotcreateorderdetailexception.ts": {
+        "version": "3a0326046490f11fb38f5419fc540d2e18f2f0f85342390badafd45032a34f99",
+        "signature": "6d827b237877c3819117e5ee19919778120a15eaf8303e0737ebbb07f06ae1e6",
+        "affectsGlobalScope": false
+      },
+      "./server/app/exceptions/orderdetail/cannotfindorderdetailswithorderexception.ts": {
+        "version": "d67f780d9aaffc8f4f410f02f951a8753a5f39a578a174a5ed58e7c8d3758c94",
+        "signature": "0174b1c54b4db1d8334df70a980f358e83d922c6fd25b5965fb7aa51f1fc4ed4",
+        "affectsGlobalScope": false
+      },
+      "./server/app/controller/orderdetails.ts": {
+        "version": "1645310538d75b42e6abee8ac5feec48e3800990fb15301845277dae82e5e63f",
+        "signature": "4388083247206c0c09fe65595bd5ee3d1090b2a2f70112373875de3ea5a90979",
+        "affectsGlobalScope": false
+      },
       "./server/app/controller/orders.ts": {
-        "version": "9da39f590fcf285b3bd57c75c40bffdb1b641169f90d1b3524455871fb498e67",
+        "version": "d10035fbcc880c174aacfd144c1d59d309303fd406664e7331bf3bdc403589b6",
         "signature": "5f9ea7b4eeb71484d2ce4287e2f7f78c82dc723f0fb7a686a83b2b64693c114d",
         "affectsGlobalScope": false
       },
       "./server/server.ts": {
         "version": "d54faeb58fd5c4f956871d266debaaac46329bbd7c3eed46ffa79b7623c84a09",
         "signature": "3b3cbe89219f5c7208870ae9336c27c597cc0148fa7858e25ee8561172abbec9",
+        "affectsGlobalScope": false
+      },
+      "./server/app/middleware/objectutilities/orderutility.ts": {
+        "version": "d61194951771f0124cd79d6f8207c53bd97b0bd7c8b45f21d6976ce7af6aaae1",
+        "signature": "15e7eae32bab243f3bf5ef68698880c709fcb5bbdc6999f12ed1eda1e02fd2a6",
         "affectsGlobalScope": false
       },
       "./server/app/structure/orderdetails.ts": {
@@ -6568,14 +6588,16 @@
         "./node_modules/@types/node/ts3.2/fs.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts",
         "./node_modules/@types/node/util.d.ts",
+        "./node_modules/class-validator/types/index.d.ts",
         "./node_modules/typeorm/index.d.ts",
         "./server/app/entities/order.ts",
         "./server/app/entities/orderdetail.ts",
-        "./server/app/exceptions/cannotcreateorderexception.ts",
-        "./server/app/exceptions/cannotupdateorderexception.ts",
         "./server/app/exceptions/httpexception.ts",
-        "./server/app/exceptions/ordernotfoundexception.ts",
-        "./server/app/middleware/ordervalidation.ts"
+        "./server/app/exceptions/order/ordernotfoundexception.ts",
+        "./server/app/exceptions/orderdetail/cannotcreateorderdetailexception.ts",
+        "./server/app/exceptions/orderdetail/cannotfindorderdetailswithorderexception.ts",
+        "./server/app/middleware/objectutilities/orderdetailutility.ts",
+        "./server/app/middleware/validations/nonrequestorderdetailvalidation.ts"
       ],
       "./server/app/controller/orders.ts": [
         "./node_modules/@types/express/index.d.ts",
@@ -6583,17 +6605,15 @@
         "./node_modules/@types/node/ts3.2/fs.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts",
         "./node_modules/@types/node/util.d.ts",
-        "./node_modules/class-validator/types/index.d.ts",
         "./node_modules/typeorm/index.d.ts",
         "./server/app/controller/orderdetails.ts",
         "./server/app/entities/order.ts",
         "./server/app/entities/orderdetail.ts",
-        "./server/app/exceptions/cannotcreateorderexception.ts",
-        "./server/app/exceptions/cannotupdateorderexception.ts",
         "./server/app/exceptions/httpexception.ts",
-        "./server/app/exceptions/ordernotfoundexception.ts",
-        "./server/app/middleware/nonrequestorderdetailvalidation.ts",
-        "./server/app/middleware/ordervalidation.ts"
+        "./server/app/exceptions/order/cannotcreateorderexception.ts",
+        "./server/app/exceptions/order/cannotupdateorderexception.ts",
+        "./server/app/exceptions/order/ordernotfoundexception.ts",
+        "./server/app/middleware/validations/ordervalidation.ts"
       ],
       "./server/app/entities/order.ts": [
         "./node_modules/@types/node/fs.d.ts",
@@ -6613,34 +6633,62 @@
         "./node_modules/typeorm/index.d.ts",
         "./server/app/entities/order.ts"
       ],
-      "./server/app/exceptions/cannotcreateorderexception.ts": [
-        "./node_modules/@types/node/fs.d.ts",
-        "./node_modules/@types/node/ts3.2/fs.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./server/app/exceptions/httpexception.ts"
-      ],
-      "./server/app/exceptions/cannotupdateorderexception.ts": [
-        "./node_modules/@types/node/fs.d.ts",
-        "./node_modules/@types/node/ts3.2/fs.d.ts",
-        "./node_modules/@types/node/ts3.2/util.d.ts",
-        "./node_modules/@types/node/util.d.ts",
-        "./server/app/exceptions/httpexception.ts"
-      ],
       "./server/app/exceptions/httpexception.ts": [
         "./node_modules/@types/node/fs.d.ts",
         "./node_modules/@types/node/ts3.2/fs.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts",
         "./node_modules/@types/node/util.d.ts"
       ],
-      "./server/app/exceptions/ordernotfoundexception.ts": [
+      "./server/app/exceptions/order/cannotcreateorderexception.ts": [
         "./node_modules/@types/node/fs.d.ts",
         "./node_modules/@types/node/ts3.2/fs.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts",
         "./node_modules/@types/node/util.d.ts",
         "./server/app/exceptions/httpexception.ts"
       ],
-      "./server/app/middleware/nonrequestorderdetailvalidation.ts": [
+      "./server/app/exceptions/order/cannotupdateorderexception.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./server/app/exceptions/httpexception.ts"
+      ],
+      "./server/app/exceptions/order/ordernotfoundexception.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./server/app/exceptions/httpexception.ts"
+      ],
+      "./server/app/exceptions/orderdetail/cannotcreateorderdetailexception.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./server/app/exceptions/httpexception.ts"
+      ],
+      "./server/app/exceptions/orderdetail/cannotfindorderdetailswithorderexception.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./server/app/exceptions/httpexception.ts"
+      ],
+      "./server/app/middleware/objectutilities/orderdetailutility.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./server/app/entities/order.ts",
+        "./server/app/entities/orderdetail.ts"
+      ],
+      "./server/app/middleware/objectutilities/orderutility.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts"
+      ],
+      "./server/app/middleware/validations/nonrequestorderdetailvalidation.ts": [
         "./node_modules/@types/node/fs.d.ts",
         "./node_modules/@types/node/ts3.2/fs.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts",
@@ -6648,7 +6696,7 @@
         "./node_modules/class-transformer/index.d.ts",
         "./node_modules/class-validator/types/index.d.ts"
       ],
-      "./server/app/middleware/ordervalidation.ts": [
+      "./server/app/middleware/validations/ordervalidation.ts": [
         "./node_modules/@types/express/index.d.ts",
         "./node_modules/@types/node/fs.d.ts",
         "./node_modules/@types/node/ts3.2/fs.d.ts",
@@ -10724,6 +10772,8 @@
       ],
       "./server/app/controller/orderdetails.ts": [
         "./node_modules/@types/express-serve-static-core/index.d.ts",
+        "./node_modules/@types/express/index.d.ts",
+        "./server/app/entities/order.ts",
         "./server/app/entities/orderdetail.ts"
       ],
       "./server/app/controller/orders.ts": [
@@ -10735,19 +10785,29 @@
       "./server/app/entities/orderdetail.ts": [
         "./server/app/entities/order.ts"
       ],
-      "./server/app/exceptions/cannotcreateorderexception.ts": [
+      "./server/app/exceptions/order/cannotcreateorderexception.ts": [
         "./server/app/exceptions/httpexception.ts"
       ],
-      "./server/app/exceptions/cannotupdateorderexception.ts": [
+      "./server/app/exceptions/order/cannotupdateorderexception.ts": [
         "./server/app/exceptions/httpexception.ts"
       ],
-      "./server/app/exceptions/ordernotfoundexception.ts": [
+      "./server/app/exceptions/order/ordernotfoundexception.ts": [
         "./server/app/exceptions/httpexception.ts"
       ],
-      "./server/app/middleware/nonrequestorderdetailvalidation.ts": [
+      "./server/app/exceptions/orderdetail/cannotcreateorderdetailexception.ts": [
+        "./server/app/exceptions/httpexception.ts"
+      ],
+      "./server/app/exceptions/orderdetail/cannotfindorderdetailswithorderexception.ts": [
+        "./server/app/exceptions/httpexception.ts"
+      ],
+      "./server/app/middleware/objectutilities/orderdetailutility.ts": [
+        "./server/app/entities/order.ts",
+        "./server/app/entities/orderdetail.ts"
+      ],
+      "./server/app/middleware/validations/nonrequestorderdetailvalidation.ts": [
         "./node_modules/class-validator/types/index.d.ts"
       ],
-      "./server/app/middleware/ordervalidation.ts": [
+      "./server/app/middleware/validations/ordervalidation.ts": [
         "./node_modules/@types/express/index.d.ts"
       ],
       "./server/app/structure/order.ts": [
@@ -11251,12 +11311,16 @@
       "./server/app/controller/orders.ts",
       "./server/app/entities/order.ts",
       "./server/app/entities/orderdetail.ts",
-      "./server/app/exceptions/cannotcreateorderexception.ts",
-      "./server/app/exceptions/cannotupdateorderexception.ts",
       "./server/app/exceptions/httpexception.ts",
-      "./server/app/exceptions/ordernotfoundexception.ts",
-      "./server/app/middleware/nonrequestorderdetailvalidation.ts",
-      "./server/app/middleware/ordervalidation.ts",
+      "./server/app/exceptions/order/cannotcreateorderexception.ts",
+      "./server/app/exceptions/order/cannotupdateorderexception.ts",
+      "./server/app/exceptions/order/ordernotfoundexception.ts",
+      "./server/app/exceptions/orderdetail/cannotcreateorderdetailexception.ts",
+      "./server/app/exceptions/orderdetail/cannotfindorderdetailswithorderexception.ts",
+      "./server/app/middleware/objectutilities/orderdetailutility.ts",
+      "./server/app/middleware/objectutilities/orderutility.ts",
+      "./server/app/middleware/validations/nonrequestorderdetailvalidation.ts",
+      "./server/app/middleware/validations/ordervalidation.ts",
       "./server/app/structure/order.ts",
       "./server/app/structure/orderdetails.ts",
       "./server/config/env_config.ts",

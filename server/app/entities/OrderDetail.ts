@@ -18,7 +18,7 @@ export class OrderDetail {
 
     @Column({
         type: "decimal",
-        precision: 6,
+        precision: 11,
         scale: 2,
         // tslint:disable-next-line:no-null-keyword
         default: null
@@ -37,7 +37,7 @@ export class OrderDetail {
 
     @Column({
         type: "decimal",
-        precision: 6,
+        precision: 11,
         scale: 2,
         // tslint:disable-next-line:no-null-keyword
         default: null

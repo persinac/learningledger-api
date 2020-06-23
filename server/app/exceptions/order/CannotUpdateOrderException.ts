@@ -1,4 +1,4 @@
-import HttpException from "./HttpException";
+import HttpException from "../HttpException";
 
 class CannotUpdateOrderException extends HttpException {
     constructor(err: string) {

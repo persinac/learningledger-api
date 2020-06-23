@@ -1,7 +1,7 @@
 import { plainToClass } from "class-transformer";
 import { validate, ValidationError } from "class-validator";
 import { RequestHandler } from "express";
-import HttpException from "../exceptions/HttpException";
+import HttpException from "../../exceptions/HttpException";
 
 function orderValidation<T>(type: any, skipMissingProperties = false): RequestHandler {
     return (req, res, next) => {

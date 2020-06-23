@@ -1,4 +1,4 @@
-import HttpException from "./HttpException";
+import HttpException from "../HttpException";
 
 class OrderNotFoundException extends HttpException {
     constructor(id: string) {

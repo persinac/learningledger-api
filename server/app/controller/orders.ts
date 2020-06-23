@@ -1,15 +1,13 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { Order } from "../entities/Order";
 import { getRepository } from "typeorm";
-import OrderNotFoundException from "../exceptions/OrderNotFoundException";
-import CannotCreateOrderException from "../exceptions/CannotCreateOrderException";
+import OrderNotFoundException from "../exceptions/order/OrderNotFoundException";
+import CannotCreateOrderException from "../exceptions/order/CannotCreateOrderException";
 import HttpException from "../exceptions/HttpException";
-import CannotUpdateOrderException from "../exceptions/CannotUpdateOrderException";
-import orderValidation from "../middleware/orderValidation";
+import CannotUpdateOrderException from "../exceptions/order/CannotUpdateOrderException";
+import orderValidation from "../middleware/validations/orderValidation";
 import { OrderDetail } from "../entities/OrderDetail";
 import OrderDetailController from "./orderDetails";
-import nonRequestOrderDetailValidation from "../middleware/nonRequestOrderDetailValidation";
-import { ValidationError } from "class-validator";
 
 class OrderController {
     public path = "/order";
@@ -24,7 +22,7 @@ class OrderController {
         this.router.get(this.path, this.getAllOrders);
         this.router.get(`${this.path}/:id`, this.getOrderById);
         this.router.post(this.path, orderValidation(Order), this.createOrder);
-        this.router.put(`${this.path}/:id`, orderValidation(Order, true), this.updateOrder);
+        // this.router.put(`${this.path}/:id`, orderValidation(Order, true), this.updateOrder);
     }
 
     private getAllOrders = (request: Request, response: Response) => {
@@ -36,9 +34,8 @@ class OrderController {
 
     private getOrderById = (request: Request, response: Response, next: NextFunction) => {
         const id = request.params.id;
-        this.orderRepository.findOne(id)
+        this.orderRepository.findOne(id, { relations: ["orderDetails"] })
             .then((result: Order) => {
-                console.log(result);
                 result ? response.send(result) : next(new OrderNotFoundException(id));
             })
             .catch((err) => {
@@ -54,47 +51,8 @@ class OrderController {
         this.orderRepository.save(newOrder)
             .then((result: Order) => {
                 if (orderDetailData) {
-                    /* TODO: This band of code is GROSS... see if we can't move to the order details controller */
-                    orderDetailData.orderID = result.orderID;
-                    orderDetailData.totalPrice = 0.00;
-                    nonRequestOrderDetailValidation(OrderDetail, orderDetailData)
-                        .then((vErrors) => {
-                            if (vErrors.length > 0) {
-                                // created an order but details has issues
-                                response.send({
-                                    order: result,
-                                    orderDetails: [],
-                                    error: vErrors.map((error: ValidationError) => Object.values(error.constraints)).join(", ")
-                                });
-                            } else {
-                                const od: OrderDetailController = new OrderDetailController();
-                                od.createOrderDetailWithNewOrder({
-                                    orderID: result.orderID,
-                                    orderTypeID: orderDetailData.orderTypeID,
-                                    price: orderDetailData.price,
-                                    orderDatetime: orderDetailData.orderDatetime || new Date(),
-                                    quantityBought: orderDetailData.quantityBought,
-                                    totalPrice: orderDetailData.quantityBought * orderDetailData.price,
-                                    orderStatusID: orderDetailData.orderStatusID
-                                })
-                                    .then((odResult: OrderDetail) => {
-                                        // created an order with corresponding details
-                                        response.send({
-                                            order: result,
-                                            orderDetails: odResult,
-                                            error: ""
-                                        });
-                                    })
-                                    .catch((err) => {
-                                        // created an order but saving details has issues
-                                        response.send({
-                                            order: result,
-                                            orderDetails: [],
-                                            error: vErrors.map((error: ValidationError) => Object.values(error.constraints)).join(", ")
-                                        });
-                                    });
-                            }
-                        });
+                    const od: OrderDetailController = new OrderDetailController();
+                    od.createOrderDetailWithNewOrder(result, orderDetailData, response);
                 } else {
                     // created an order without details
                     response.send({
@@ -109,7 +67,7 @@ class OrderController {
             });
     };
 
-    /* TODO: update an order will really only create a corresponding orderDetail row */
+    /* Given the DB update, order won't really ever be deleted. Only order details will be created */
     private updateOrder = (request: Request, response: Response, next: NextFunction) => {
         const id = request.params.id;
         const orderData: Order = request.body;
