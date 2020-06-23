@@ -2366,9 +2366,14 @@
         "signature": "b2436ef9a106831983a19769a07e50911dcd1ba8f1bf4e3bc4853f497a3b9ce6",
         "affectsGlobalScope": false
       },
+      "./server/app/entities/ordernotes.ts": {
+        "version": "a74417018228211e5765275c76b9bec59d0bc0e652db883f4dd4a2966c667cf5",
+        "signature": "8471e313bc2305adc302deec73effab9128718222aabe23be9e0bd4ecaccad2e",
+        "affectsGlobalScope": false
+      },
       "./server/app/entities/order.ts": {
-        "version": "efb86c83a0518e8fa4fc293c02f05634bef18ff2aad73cddebea3d6d5a283ebb",
-        "signature": "2854a894dd120f1c3b29e1a0b4bcdd3c7f571e5d08fc7f7fd37da668bbf27bf5",
+        "version": "f538417f78a55e0c1792dfe75aca1b84a90ff8eed57084f9b190a00dc5b4d3b8",
+        "signature": "5c39a01b5fd2ce074c900f72dd21d95199a68de61514d932441922a30e2529b8",
         "affectsGlobalScope": false
       },
       "./server/app/exceptions/httpexception.ts": {
@@ -2457,7 +2462,7 @@
         "affectsGlobalScope": false
       },
       "./server/app/controller/orders.ts": {
-        "version": "d10035fbcc880c174aacfd144c1d59d309303fd406664e7331bf3bdc403589b6",
+        "version": "0f4c8d9183ccb955d9c7b621c51a365d0f72a3964fdb796089c6af53610524e9",
         "signature": "5f9ea7b4eeb71484d2ce4287e2f7f78c82dc723f0fb7a686a83b2b64693c114d",
         "affectsGlobalScope": false
       },
@@ -6622,9 +6627,19 @@
         "./node_modules/@types/node/util.d.ts",
         "./node_modules/class-validator/types/index.d.ts",
         "./node_modules/typeorm/index.d.ts",
-        "./server/app/entities/orderdetail.ts"
+        "./server/app/entities/orderdetail.ts",
+        "./server/app/entities/ordernotes.ts"
       ],
       "./server/app/entities/orderdetail.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./node_modules/class-validator/types/index.d.ts",
+        "./node_modules/typeorm/index.d.ts",
+        "./server/app/entities/order.ts"
+      ],
+      "./server/app/entities/ordernotes.ts": [
         "./node_modules/@types/node/fs.d.ts",
         "./node_modules/@types/node/ts3.2/fs.d.ts",
         "./node_modules/@types/node/ts3.2/util.d.ts",
@@ -10780,9 +10795,13 @@
         "./node_modules/@types/express-serve-static-core/index.d.ts"
       ],
       "./server/app/entities/order.ts": [
-        "./server/app/entities/orderdetail.ts"
+        "./server/app/entities/orderdetail.ts",
+        "./server/app/entities/ordernotes.ts"
       ],
       "./server/app/entities/orderdetail.ts": [
+        "./server/app/entities/order.ts"
+      ],
+      "./server/app/entities/ordernotes.ts": [
         "./server/app/entities/order.ts"
       ],
       "./server/app/exceptions/order/cannotcreateorderexception.ts": [
@@ -11311,6 +11330,7 @@
       "./server/app/controller/orders.ts",
       "./server/app/entities/order.ts",
       "./server/app/entities/orderdetail.ts",
+      "./server/app/entities/ordernotes.ts",
       "./server/app/exceptions/httpexception.ts",
       "./server/app/exceptions/order/cannotcreateorderexception.ts",
       "./server/app/exceptions/order/cannotupdateorderexception.ts",

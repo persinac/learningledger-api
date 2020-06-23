@@ -85,41 +85,58 @@ class OrderDetailController {
     };
 
     /* public methods? */
-    /* Not sure this is how I want this to work, by passing in a response object, but we'll see */
+    /***
+     * Not sure this is how I want this to work, by passing in a response object, but we'll see
+     *
+     * Idea Update: 6/23/2020:
+     *  - Remove response param
+     *  - Return the object/interface
+     *  ---- Create an interface: IOrderResponse {order, orderDetails, orderNotes, error}
+     *  - I think it'll need to be async and each place it's used will need to be await <>
+     *  - See if we can't plug this into a utility... maybe we'll create an actual class...
+     ***/
     public createOrderDetailWithNewOrder = (order: Order, orderDetail: OrderDetail, response: Response) => {
-        orderDetail = OrderDetailUtility.setNewOrderDetailValues(order, orderDetail);
-        nonRequestOrderDetailValidation(OrderDetail, orderDetail)
-            .then((vErrors) => {
-                if (vErrors.length > 0) {
-                    // created an order but details has issues
-                    response.send({
-                        order: order,
-                        orderDetails: [],
-                        error: vErrors.map((error: ValidationError) => Object.values(error.constraints)).join(", ")
-                    });
-                } else {
-                    orderDetail.totalPrice = OrderDetailUtility.getOrderDetailTotalPrice(orderDetail);
-                    const newOrderDetail = this.orderDetailRepository.create(orderDetail);
-                    this.orderDetailRepository.save(newOrderDetail)
-                        .then((odResult: OrderDetail) => {
-                            // created an order with corresponding details
-                            response.send({
-                                order: order,
-                                orderDetails: odResult,
-                                error: ""
-                            });
-                        })
-                        .catch((err) => {
-                            // created an order but saving details has issues
-                            response.send({
-                                order: order,
-                                orderDetails: [],
-                                error: err
-                            });
-                        });
-                }
+        if (orderDetail === undefined) {
+            response.send({
+                order: order,
+                orderDetails: [],
+                error: ""
             });
-    };
+        } else {
+            orderDetail = OrderDetailUtility.setNewOrderDetailValues(order, orderDetail);
+            nonRequestOrderDetailValidation(OrderDetail, orderDetail)
+                .then((vErrors) => {
+                    if (vErrors.length > 0) {
+                        // created an order but details has issues
+                        response.send({
+                            order: order,
+                            orderDetails: [],
+                            error: vErrors.map((error: ValidationError) => Object.values(error.constraints)).join(", ")
+                        });
+                    } else {
+                        orderDetail.totalPrice = OrderDetailUtility.getOrderDetailTotalPrice(orderDetail);
+                        const newOrderDetail = this.orderDetailRepository.create(orderDetail);
+                        this.orderDetailRepository.save(newOrderDetail)
+                            .then((odResult: OrderDetail) => {
+                                // created an order with corresponding details
+                                response.send({
+                                    order: order,
+                                    orderDetails: odResult,
+                                    error: ""
+                                });
+                            })
+                            .catch((err) => {
+                                // created an order but saving details has issues
+                                response.send({
+                                    order: order,
+                                    orderDetails: [],
+                                    error: err
+                                });
+                            });
+                    }
+                });
+        }
+    }
 }
 
 export default OrderDetailController;
