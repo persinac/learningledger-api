@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { IsNumber, ValidateIf } from "class-validator";
+import { IsNumber } from "class-validator";
 import { Order } from "./Order";
 
 @Entity("ordernotes")

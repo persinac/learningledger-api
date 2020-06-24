@@ -3,7 +3,6 @@ import { Order } from "../entities/Order";
 import { getRepository } from "typeorm";
 import OrderNotFoundException from "../exceptions/order/OrderNotFoundException";
 import HttpException from "../exceptions/HttpException";
-import CannotUpdateOrderException from "../exceptions/order/CannotUpdateOrderException";
 import orderValidation from "../middleware/validations/orderValidation";
 import { OrderDetail } from "../entities/OrderDetail";
 import OrderDetailController from "./orderDetails";
@@ -25,7 +24,6 @@ class OrderController {
         this.router.get(this.path, this.getAllOrders);
         this.router.get(`${this.path}/:id`, this.getOrderById);
         this.router.post(this.path, orderValidation(Order), this.createOrder);
-        // this.router.put(`${this.path}/:id`, orderValidation(Order, true), this.updateOrder);
     }
 
     private getAllOrders = (request: Request, response: Response) => {
@@ -66,7 +64,7 @@ class OrderController {
             });
     };
 
-    private createOrder = async (request: Request, response: Response, next: NextFunction) => {
+    private createOrder = async (request: Request, response: Response) => {
         const orderData: Order = request.body;
         const orderDetailData: OrderDetail = request.body.orderDetail;
         const orderNotesData: OrderNote = request.body.orderNotes;
@@ -87,26 +85,6 @@ class OrderController {
         }
         response.send(iResponse);
     };
-
-    /* Given the DB update, order won't really ever be updated. Only order details will be created */
-    private updateOrder = (request: Request, response: Response, next: NextFunction) => {
-        const id = request.params.id;
-        const orderData: Order = request.body;
-        this.orderRepository.update(id, orderData)
-            .then(() => {
-                this.orderRepository.findOne(id)
-                    .then((result: Order) => {
-                        console.log(result);
-                        result ? response.send(result) : next(new OrderNotFoundException(id));
-                    })
-                    .catch((err) => {
-                        next(new HttpException(404, err));
-                    });
-            })
-            .catch((err) => {
-                next(new CannotUpdateOrderException(err));
-            });
-    }
 }
 
 export default OrderController;
