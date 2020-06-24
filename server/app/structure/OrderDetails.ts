@@ -1,5 +1,5 @@
-interface OrderDetail {
-    orderDetailID: number;
+interface IOrderDetail {
+    orderDetailID?: number;
     orderID: number;
     orderTypeID: number;
     price: number;
@@ -9,4 +9,4 @@ interface OrderDetail {
     orderStatusID: number;
 }
 
-export default OrderDetail;
+export default IOrderDetail;

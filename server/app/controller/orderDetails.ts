@@ -1,7 +1,6 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { Order } from "../entities/Order";
 import { getRepository } from "typeorm";
-import OrderNotFoundException from "../exceptions/order/OrderNotFoundException";
 import HttpException from "../exceptions/HttpException";
 import { OrderDetail } from "../entities/OrderDetail";
 import nonRequestOrderDetailValidation from "../middleware/validations/nonRequestOrderDetailValidation";
@@ -10,6 +9,8 @@ import { OrderDetailUtility } from "../middleware/objectUtilities/orderDetailUti
 import CannotCreateOrderDetailException from "../exceptions/orderDetail/CannotCreateOrderDetailException";
 import CannotFindOrderDetailsWithOrderException
     from "../exceptions/orderDetail/CannotFindOrderDetailsWithOrderException";
+import IOrderResponse from "../structure/IOrderResponse";
+import OrderDetailNotFoundException from "../exceptions/orderDetail/OrderDetailNotFoundException";
 
 class OrderDetailController {
     public path = "/order/:orderId/detail";
@@ -31,7 +32,7 @@ class OrderDetailController {
         this.orderDetailRepository.findOne(id)
             .then((result: OrderDetail) => {
                 console.log(result);
-                result ? response.send(result) : next(new OrderNotFoundException(id));
+                result ? response.send(result) : next(new OrderDetailNotFoundException(id));
             })
             .catch((err) => {
                 next(new HttpException(404, err));
@@ -86,56 +87,28 @@ class OrderDetailController {
 
     /* public methods? */
     /***
-     * Not sure this is how I want this to work, by passing in a response object, but we'll see
+     * Better... but still not my favorite location
      *
-     * Idea Update: 6/23/2020:
-     *  - Remove response param
-     *  - Return the object/interface
-     *  ---- Create an interface: IOrderResponse {order, orderDetails, orderNotes, error}
-     *  - I think it'll need to be async and each place it's used will need to be await <>
-     *  - See if we can't plug this into a utility... maybe we'll create an actual class...
+     *  Can we plug this into a utility... maybe we'll create an actual class...
      ***/
-    public createOrderDetailWithNewOrder = (order: Order, orderDetail: OrderDetail, response: Response) => {
-        if (orderDetail === undefined) {
-            response.send({
-                order: order,
-                orderDetails: [],
-                error: ""
-            });
+    public createOrderDetailWithNewOrder = async (order: Order, orderDetail: OrderDetail, currentIOResponse: IOrderResponse): Promise<IOrderResponse> => {
+        orderDetail = OrderDetailUtility.setNewOrderDetailValues(order, orderDetail);
+        const vErrors: ValidationError[] = await nonRequestOrderDetailValidation(OrderDetail, orderDetail);
+        if (vErrors.length > 0) {
+            // created an order but details has constraint issues
+            currentIOResponse.error = vErrors.map((error: ValidationError) => Object.values(error.constraints)).join(", ");
         } else {
-            orderDetail = OrderDetailUtility.setNewOrderDetailValues(order, orderDetail);
-            nonRequestOrderDetailValidation(OrderDetail, orderDetail)
-                .then((vErrors) => {
-                    if (vErrors.length > 0) {
-                        // created an order but details has issues
-                        response.send({
-                            order: order,
-                            orderDetails: [],
-                            error: vErrors.map((error: ValidationError) => Object.values(error.constraints)).join(", ")
-                        });
-                    } else {
-                        orderDetail.totalPrice = OrderDetailUtility.getOrderDetailTotalPrice(orderDetail);
-                        const newOrderDetail = this.orderDetailRepository.create(orderDetail);
-                        this.orderDetailRepository.save(newOrderDetail)
-                            .then((odResult: OrderDetail) => {
-                                // created an order with corresponding details
-                                response.send({
-                                    order: order,
-                                    orderDetails: odResult,
-                                    error: ""
-                                });
-                            })
-                            .catch((err) => {
-                                // created an order but saving details has issues
-                                response.send({
-                                    order: order,
-                                    orderDetails: [],
-                                    error: err
-                                });
-                            });
-                    }
-                });
+            orderDetail.totalPrice = OrderDetailUtility.getOrderDetailTotalPrice(orderDetail);
+            const newOrderDetail = this.orderDetailRepository.create(orderDetail);
+            try {
+                const odResult: OrderDetail = await this.orderDetailRepository.save(newOrderDetail);
+                currentIOResponse.orderDetails.push(odResult);
+            } catch (e) {
+                // created an order but details has field value issues
+                currentIOResponse.error = `Order Detail: ${e.message}`;
+            }
         }
+        return currentIOResponse;
     }
 }
 

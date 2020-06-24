@@ -13,40 +13,35 @@ export class OrderNote {
 
     // tslint:disable-next-line:no-null-keyword
     @Column({ default: null, nullable: true })
-    @IsNumber()
-    public whyPurchaseID: number;
+    public whyPurchaseID?: number;
 
     // tslint:disable-next-line:no-null-keyword
     @Column({ default: null, nullable: true })
-    @IsNumber()
-    public whySellID: number;
+    public whySellID?: number;
 
     // tslint:disable-next-line:no-null-keyword
     @Column({ default: null, nullable: true })
-    public purchaseNotes: string;
+    public purchaseNotes?: string;
 
     // tslint:disable-next-line:no-null-keyword
     @Column({ default: null, nullable: true })
-    public sellNotes: string;
+    public sellNotes?: string;
 
     // tslint:disable-next-line:no-null-keyword
     @Column({ default: null, nullable: true })
-    @IsNumber()
-    public purchaseSentiment: number;
+    public purchaseSentiment?: number;
 
     // tslint:disable-next-line:no-null-keyword
     @Column({ default: null, nullable: true })
-    @IsNumber()
-    public sellSentiment: number;
+    public sellSentiment?: number;
 
     // tslint:disable-next-line:no-null-keyword
     @Column({ default: null, nullable: true })
-    @IsNumber()
-    public estimatedRisk: number;
+    public estimatedRisk?: number;
 
     // tslint:disable-next-line:no-null-keyword
     @Column({ default: null, nullable: true })
-    public endGoal: string;
+    public endGoal?: string;
 
     @ManyToOne(() => Order)
     @JoinColumn({
