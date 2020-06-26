@@ -4,13 +4,15 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import ormDBConfig from "./ormconfig";
 import OrderDetailController from "./app/controller/orderDetails";
+import OrderNotesController from "./app/controller/orderNotes";
 
 createConnection(ormDBConfig)
     .then((conn) => {
         const app = new App(
             [
                 new OrderController(),
-                new OrderDetailController()
+                new OrderDetailController(),
+                new OrderNotesController()
             ],
             48614,
         );

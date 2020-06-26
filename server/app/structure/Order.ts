@@ -1,11 +1,8 @@
-import OrderDetail from "./OrderDetails";
-
-interface Order {
-    orderID: number;
+interface IOrder {
+    orderID?: number;
     stockID: number;
     commodityType: number;
     contractType: number;
-    orderDetails: OrderDetail;
 }
 
-export default Order;
+export default IOrder;
