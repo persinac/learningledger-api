@@ -5,6 +5,7 @@ import { createConnection } from "typeorm";
 import ormDBConfig from "./ormconfig";
 import OrderDetailController from "./app/controller/orderDetails";
 import OrderNotesController from "./app/controller/orderNotes";
+import SymbolController from "./app/controller/symbols";
 
 createConnection(ormDBConfig)
     .then((conn) => {
@@ -12,7 +13,8 @@ createConnection(ormDBConfig)
             [
                 new OrderController(),
                 new OrderDetailController(),
-                new OrderNotesController()
+                new OrderNotesController(),
+                new SymbolController(),
             ],
             48614,
         );

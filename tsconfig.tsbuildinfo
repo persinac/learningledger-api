@@ -477,7 +477,7 @@
         "affectsGlobalScope": false
       },
       "./server/app.ts": {
-        "version": "254c7bea1e4f7a25c1ae3b6afae598d38895f6b8b80c6fdfffe4fdffd0fa1ea7",
+        "version": "20ea91402359ccdd49f8761983153660fc56b391357594a54dfe82245c569716",
         "signature": "d658a37eeaa5556eecac7573b1f83d0ba366006155a00a66d62afa5e2936a2d8",
         "affectsGlobalScope": false
       },
@@ -2506,8 +2506,18 @@
         "signature": "0a9dc2c2efa9bcfa249e1702b1e692c9f993ad539f1c2fdbe93b595ed82fc099",
         "affectsGlobalScope": false
       },
+      "./server/app/structure/symbol.ts": {
+        "version": "51c6f5797d4ca7f56a4baaae5437acc5f29601f7b8f3e8da99f346829a66f723",
+        "signature": "db294091fd33940bce6d1cb11cddba9b9b7a63e90a500d50bc011eeb022e5124",
+        "affectsGlobalScope": false
+      },
+      "./server/app/controller/symbols.ts": {
+        "version": "da0bfa48bbe560a6b68a78af751231e7cdfd176491c2746dfb25751e5876338a",
+        "signature": "4c9ee4e4c1977892bee77179ec584be4809555d79b03b2169fe94fc24c8a1b02",
+        "affectsGlobalScope": false
+      },
       "./server/server.ts": {
-        "version": "31303cf4f30a42fe9da3b26c90f7aa823e9aa0cbb9f302bcd28efac3285ca161",
+        "version": "90281544016d8f1994059bc8b664a3d9c51570a8c3caf89f5038179d985dc808",
         "signature": "3b3cbe89219f5c7208870ae9336c27c597cc0148fa7858e25ee8561172abbec9",
         "affectsGlobalScope": false
       },
@@ -6694,6 +6704,14 @@
         "./server/app/structure/iorderresponse.ts",
         "./server/app/structure/order.ts"
       ],
+      "./server/app/controller/symbols.ts": [
+        "./node_modules/@types/express/index.d.ts",
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts",
+        "./server/app/structure/symbol.ts"
+      ],
       "./server/app/entities/order.ts": [
         "./node_modules/@types/node/fs.d.ts",
         "./node_modules/@types/node/ts3.2/fs.d.ts",
@@ -6858,6 +6876,12 @@
         "./node_modules/@types/node/ts3.2/util.d.ts",
         "./node_modules/@types/node/util.d.ts"
       ],
+      "./server/app/structure/symbol.ts": [
+        "./node_modules/@types/node/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/fs.d.ts",
+        "./node_modules/@types/node/ts3.2/util.d.ts",
+        "./node_modules/@types/node/util.d.ts"
+      ],
       "./server/config/env_config.ts": [
         "./node_modules/@types/node/fs.d.ts",
         "./node_modules/@types/node/ts3.2/fs.d.ts",
@@ -6882,6 +6906,7 @@
         "./server/app/controller/orderdetails.ts",
         "./server/app/controller/ordernotes.ts",
         "./server/app/controller/orders.ts",
+        "./server/app/controller/symbols.ts",
         "./server/ormconfig.ts"
       ]
     },
@@ -10932,6 +10957,9 @@
       "./server/app/controller/orders.ts": [
         "./node_modules/@types/express-serve-static-core/index.d.ts"
       ],
+      "./server/app/controller/symbols.ts": [
+        "./node_modules/@types/express-serve-static-core/index.d.ts"
+      ],
       "./server/app/entities/order.ts": [
         "./server/app/entities/orderdetail.ts",
         "./server/app/entities/ordernotes.ts"
@@ -11485,6 +11513,7 @@
       "./server/app/controller/orderdetails.ts",
       "./server/app/controller/ordernotes.ts",
       "./server/app/controller/orders.ts",
+      "./server/app/controller/symbols.ts",
       "./server/app/entities/order.ts",
       "./server/app/entities/orderdetail.ts",
       "./server/app/entities/ordernotes.ts",
@@ -11507,6 +11536,7 @@
       "./server/app/structure/order.ts",
       "./server/app/structure/orderdetails.ts",
       "./server/app/structure/ordernotes.ts",
+      "./server/app/structure/symbol.ts",
       "./server/config/env_config.ts",
       "./server/ormconfig.ts",
       "./server/server.ts"
