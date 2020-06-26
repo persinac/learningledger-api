@@ -1,5 +1,19 @@
 import express from "express";
 import * as bodyParser from "body-parser";
+import cors, { CorsOptions } from "cors";
+
+const originsWhitelist = [
+    "http://localhost:3000",      // this is my front-end url for development
+    "http://www.myproductionurl.com"
+];
+const corsOptions: CorsOptions = {
+    origin: function(origin, callback) {
+        const isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
+        // tslint:disable-next-line:no-null-keyword
+        callback(null, isWhitelisted);
+    },
+    credentials: true
+};
 
 class App {
     public app: express.Application;
@@ -14,6 +28,8 @@ class App {
     }
 
     private initializeMiddlewares() {
+        this.app.use(cors(corsOptions));
+        this.app.options("*", cors(corsOptions));
         this.app.use(bodyParser.json());
     }
 
